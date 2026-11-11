@@ -24,11 +24,12 @@ export class AppComponent {
   readonly projects = [
     {
       number: '01',
-      title: 'The dashboard',
+      title: 'Audio Player with loop settings for each track',
       category: 'PRODUCT DESIGN',
-      description: 'A clear, data-rich workspace designed to make everyday decisions feel simple.',
-      video: 'assets/projects_videos/sample1.mp4',
-      tags: ['Angular', 'TypeScript', 'UI design']
+      description: 'Set Loop counter for each track and play them in a loop. This project is built using Django, Docker, PostgreSQL and deployed on Render.',
+      video: 'assets/projects_videos/merged_3_withtitles.mp4',
+      tags: ['Django', 'Docker', 'PostgreSQL', 'Render Deployment',],
+      link:'https://djangoaudioplayerweb.onrender.com/',
     },
     {
       number: '02',

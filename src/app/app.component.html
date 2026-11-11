@@ -142,6 +142,7 @@
               <span class="project-arrow" aria-hidden="true">↗</span>
             </div>
             <p>{{ project.description }}</p>
+            <p>{{ project.link }}</p>
             <ul class="project-tags" [attr.aria-label]="project.title + ' technologies'">
               @for (tag of project.tags; track tag) {
                 <li>{{ tag }}</li>
