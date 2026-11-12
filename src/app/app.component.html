@@ -55,21 +55,27 @@
         <p class="art-quote">“Make it useful.<br>Make it feel easy.”</p>
         <div class="art-card-rule"></div>
         <div class="art-stack">
-          <span>Django</span>
-          <span>Flask</span>
-          <span>Angular</span>
+          <!-- <div class="row"> -->
+            <span>Django</span>
+            <span>Flask</span>
+            <span>Angular</span>
+            <span>Docker</span>
+            <span>Render</span>
         </div>
+         <div class="art-stack">
+            <span>VS Code Github</span>
+          </div>
       </div>
       <span class="art-caption">DESIGN-MINDED DEVELOPMENT <span aria-hidden="true">✳</span></span>
       <span class="art-scribble" aria-hidden="true">↗</span>
     </div>
-    <a class="scroll-cue" href="#about"><span></span> SCROLL TO EXPLORE</a>
+    <!-- <a class="scroll-cue" href="#about"><span></span> SCROLL TO EXPLORE</a> -->
   </section>
 
   <section class="about section-shell section-block" id="about" aria-labelledby="about-title">
     <div class="section-intro">
       <p class="eyebrow">01 / A LITTLE INTRO</p>
-      <h2 id="about-title">Good work starts<br>with <span>good questions.</span></h2>
+      <h3 id="about-title">Good work starts<br>with <span>good questions.</span></h3>
     </div>
     <div class="about-copy">
       <p class="about-lead">
@@ -89,7 +95,7 @@
     <div class="section-shell skills-inner">
       <div>
         <p class="eyebrow">02 / THE TOOLKIT</p>
-        <h2 id="skills-title">Tools I like<br><span>to work with.</span></h2>
+        <h3 id="skills-title">Tools I like<br><span>to work with.</span></h3>
       </div>
       <div class="skills-content">
         <p>Always learning, always looking for the right tool for the job.</p>
@@ -107,7 +113,7 @@
     <div class="work-heading">
       <div>
         <p class="eyebrow">03 / SELECTED WORK</p>
-        <h2 id="work-title">A few things<br><span>made with care.</span></h2>
+        <h3 id="work-title">A few things<br><span>made with care.</span></h3>
       </div>
       <p class="work-note">A starting point for the projects, experiments, and ideas I’m proud to share.</p>
     </div>
@@ -142,12 +148,21 @@
               <span class="project-arrow" aria-hidden="true">↗</span>
             </div>
             <p>{{ project.description }}</p>
-            <p>{{ project.link }}</p>
+            <div class="devtools">
+              <h4>Development Tools:</h4>
+              <ul class="project-tags" [attr.aria-label]="project.title + ' technologies'">
+              @for (tools of project.development_tools; track tools) {
+                <li>{{ tools }}</li>
+              }
+              </ul>
+            </div>
+            <!-- {{ project.development_tools.join(', ') }} -->
             <ul class="project-tags" [attr.aria-label]="project.title + ' technologies'">
               @for (tag of project.tags; track tag) {
                 <li>{{ tag }}</li>
               }
             </ul>
+            <a class="project-link" [href]="project.link" target="_blank" rel="noopener noreferrer">Live project link</a>
           </div>
         </article>
     </ng-template>
@@ -192,9 +207,54 @@
         <p class="eyebrow">04 / YOUR NEXT GREAT HIRE?</p>
         <h2 id="contact-title">Let’s make<br><span>something matter.</span></h2>
       </div>
+      <div class="emailformdiv">
+        @if (emailFormOpen) {
+        <form
+          id="email-form"
+          class="email-form"
+          aria-label="Send Vinaya an email"
+          (submit)="submitEmail($event, name.value, senderEmail.value, message.value)">
+          <button
+            class="email-form-close"
+            type="button"
+            aria-label="Close email form"
+            (click)="emailFormOpen = false">×</button>
+          <label>
+            Your name
+            <input #name name="name" type="text" autocomplete="name" required>
+          </label>
+          <label>
+            Your email
+            <input #senderEmail name="email" type="email" autocomplete="email" required>
+          </label>
+          <label>
+            Message
+            <textarea #message name="message" rows="3" required></textarea>
+          </label>
+          <button class="email-form-submit" type="submit" [disabled]="emailSubmissionStatus === 'submitting'">
+            {{ emailSubmissionStatus === 'submitting' ? 'Sending…' : 'Submit' }}<span aria-hidden="true">↗</span>
+          </button>
+          @if (emailSubmissionStatus === 'success') {
+            <p class="email-form-status" role="status">Thanks! Your message has been sent.</p>
+          } @else if (emailSubmissionStatus === 'error') {
+            <p class="email-form-status email-form-error" role="alert">Sorry, your message could not be sent. Please try again.</p>
+          }
+        </form>
+        }
+      </div>
+      
       <div class="contact-copy">
         <p>I’m currently open to new opportunities. If you’re building something thoughtful, I’d love to hear about it.</p>
-        <a class="button button-light" [href]="'mailto:' + contactEmail">Say hello <span aria-hidden="true">↗</span></a>
+        <div class="contact-actions">
+          <button
+            class="button button-light"
+            type="button"
+            aria-controls="email-form"
+            [attr.aria-expanded]="emailFormOpen"
+            (click)="showEmailForm()">
+            Say hello <span aria-hidden="true">↗</span>
+          </button>
+        </div>
       </div>
       <span class="contact-star" aria-hidden="true">✳</span>
     </div>

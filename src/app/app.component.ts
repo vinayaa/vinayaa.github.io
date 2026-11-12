@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { environment } from '../environments/environment';
+import { EmailService } from './services/email.service';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +10,18 @@ import { environment } from '../environments/environment';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  private readonly emailService = inject(EmailService);
+
   menuOpen = false;
-  readonly contactEmail = environment.contactEmail;
+  emailFormOpen = false;
+  emailSubmissionStatus: 'idle' | 'submitting' | 'success' | 'error' = 'idle';
 
   readonly skills = [
     'Django',
     'Flask',
     'Angular',
-    'HTML & CSS',
+    'Docker',
+    'VS Code',
     'Git',
   ];
 
@@ -28,6 +32,7 @@ export class AppComponent {
       category: 'PRODUCT DESIGN',
       description: 'Set Loop counter for each track and play them in a loop. This project is built using Django, Docker, PostgreSQL and deployed on Render.',
       video: 'assets/projects_videos/merged_3_withtitles.mp4',
+      development_tools: ['AI-powered VS Code GitHub Copilot',],
       tags: ['Django', 'Docker', 'PostgreSQL', 'Render Deployment',],
       link:'https://djangoaudioplayerweb.onrender.com/',
     },
@@ -36,24 +41,30 @@ export class AppComponent {
       title: 'The dashboard',
       category: 'PRODUCT DESIGN',
       description: 'A clear, data-rich workspace designed to make everyday decisions feel simple.',
+      development_tools: ['VS Code Copilot'],
       video: 'assets/projects_videos/sample1.mp4',
-      tags: ['Angular', 'TypeScript', 'UI design']
+      tags: ['Angular', 'TypeScript', 'UI design'],
+      link:'https://djangoaudioplayerweb.onrender.com/',
     },
     {
       number: '03',
       title: 'The dashboard',
       category: 'PRODUCT DESIGN',
       description: 'A clear, data-rich workspace designed to make everyday decisions feel simple.',
+      development_tools: ['AI-powered VS Code GitHub Copilot'],
       video: 'assets/projects_videos/sample1.mp4',
-      tags: ['Angular', 'TypeScript', 'UI design']
+      tags: ['Angular', 'TypeScript', 'UI design'],
+      link:'https://djangoaudioplayerweb.onrender.com/',
     },
     {
       number: '04',
       title: 'The dashboard',
       category: 'PRODUCT DESIGN',
       description: 'A clear, data-rich workspace designed to make everyday decisions feel simple.',
+      development_tools: ['VS Code Copilot'],
       video: 'assets/projects_videos/sample1.mp4',
-      tags: ['Angular', 'TypeScript', 'UI design']
+      tags: ['Angular', 'TypeScript', 'UI design'],
+      link:'https://djangoaudioplayerweb.onrender.com/',
     }
   ];
 
@@ -88,5 +99,26 @@ export class AppComponent {
 
   closeMenu(): void {
     this.menuOpen = false;
+  }
+
+  showEmailForm(): void {
+    this.emailFormOpen = true;
+  }
+
+  submitEmail(event: SubmitEvent, name: string, senderEmail: string, message: string): void {
+    event.preventDefault();
+    if (this.emailSubmissionStatus === 'submitting') {
+      return;
+    }
+
+    this.emailSubmissionStatus = 'submitting';
+    this.emailService.submit({ name, email: senderEmail, message }).subscribe({
+      next: () => {
+        this.emailSubmissionStatus = 'success';
+      },
+      error: () => {
+        this.emailSubmissionStatus = 'error';
+      }
+    });
   }
 }

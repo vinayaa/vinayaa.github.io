@@ -1,10 +1,18 @@
 import { TestBed } from '@angular/core/testing';
+import { of, throwError } from 'rxjs';
 import { AppComponent } from './app.component';
+import { EmailService } from './services/email.service';
 
 describe('AppComponent', () => {
+  let emailService: jasmine.SpyObj<EmailService>;
+
   beforeEach(async () => {
+    emailService = jasmine.createSpyObj<EmailService>('EmailService', ['submit']);
+    emailService.submit.and.returnValue(of(void 0));
+
     await TestBed.configureTestingModule({
-      imports: [AppComponent]
+      imports: [AppComponent],
+      providers: [{ provide: EmailService, useValue: emailService }]
     }).compileComponents();
   });
 
@@ -16,12 +24,71 @@ describe('AppComponent', () => {
     expect(fixture.nativeElement.querySelector('#hero-title')?.textContent).toContain('Thoughtful interfaces.');
   });
 
-  it('uses the configured email address for the Say hello link', () => {
+  it('opens the compact email form from the Say hello button', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const sayHelloLink = fixture.nativeElement.querySelector('.button-light') as HTMLAnchorElement;
+    const sayHelloButton = fixture.nativeElement.querySelector('.button-light') as HTMLButtonElement;
 
-    expect(sayHelloLink.href).toBe('mailto:vinayasawant08@gmail.com');
+    expect(fixture.nativeElement.querySelector('#email-form')).toBeNull();
+    expect(sayHelloButton.getAttribute('aria-expanded')).toBe('false');
+    sayHelloButton.click();
+    fixture.detectChanges();
+
+    const emailForm = fixture.nativeElement.querySelector('#email-form') as HTMLFormElement;
+    const contactTitle = fixture.nativeElement.querySelector('#contact-title') as HTMLElement;
+    const contactButton = fixture.nativeElement.querySelector('.button-light') as HTMLButtonElement;
+
+    expect(emailForm).toBeTruthy();
+    expect(contactTitle.compareDocumentPosition(emailForm) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(emailForm.compareDocumentPosition(contactButton) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(sayHelloButton.getAttribute('aria-expanded')).toBe('true');
+
+    sayHelloButton.click();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('#email-form')).toBeTruthy();
+
+    (emailForm.querySelector('.email-form-close') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('#email-form')).toBeNull();
+  });
+
+  it('submits the email form through EmailService', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    fixture.nativeElement.querySelector('.button-light').click();
+    fixture.detectChanges();
+
+    const emailForm = fixture.nativeElement.querySelector('#email-form') as HTMLFormElement;
+    const name = emailForm.querySelector('[name="name"]') as HTMLInputElement;
+    const senderEmail = emailForm.querySelector('[name="email"]') as HTMLInputElement;
+    const message = emailForm.querySelector('[name="message"]') as HTMLTextAreaElement;
+    name.value = 'Alex';
+    senderEmail.value = 'alex@example.com';
+    message.value = 'I would like to talk about a project.';
+
+    emailForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    fixture.detectChanges();
+
+    expect(emailService.submit).toHaveBeenCalledWith({
+      name: 'Alex',
+      email: 'alex@example.com',
+      message: 'I would like to talk about a project.'
+    });
+    expect(fixture.nativeElement.querySelector('[role="status"]')?.textContent).toContain('message has been sent');
+  });
+
+  it('shows an error when email submission fails', () => {
+    emailService.submit.and.returnValue(throwError(() => new Error('Request failed')));
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    fixture.nativeElement.querySelector('.button-light').click();
+    fixture.detectChanges();
+    const emailForm = fixture.nativeElement.querySelector('#email-form') as HTMLFormElement;
+
+    emailForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('[role="alert"]')?.textContent).toContain('could not be sent');
   });
 
   it('shows all videos in a slider when there are more than three', () => {
