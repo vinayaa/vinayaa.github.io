@@ -295,3 +295,15 @@ HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 12/11/2026
 <a class="button button-light" [href]="'mailto:' + contactEmail">Say hello <span aria-hidden="true">↗</span></a>
 Build passes. Tests: 6 passed; 1 existing video-asset expectation fails because it expects sample1.mp4 while the first project uses merged_3_withtitles.mp4.
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+response from django docker audioplayer api -  contactApiUrlLocal:'http://127.0.0.1:8000/api/emailform/emailformdata',
+
+{
+    "id": "6af6d4d77ba3cad978953edb",
+    "name": "deepa",
+    "email": "deepa@gmail.com",
+    "message": "ths is deepa hallo",
+    "created_at": "13 Nov 2026, 09:13 AM UTC",
+    "notification_sent": true,
+    "detail": "Submission saved and notification email sent."
+}

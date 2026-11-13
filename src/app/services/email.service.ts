@@ -9,14 +9,24 @@ export interface ContactMessage {
   message: string;
 }
 
+export interface EmailFormrRsponse{
+    name: string;
+    email: string;
+    message: string;
+    created_at: string;
+    notification_sent: boolean;
+    detail: string;
+    successflag:boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class EmailService {
   private readonly http = inject(HttpClient);
 
-  submit(message: ContactMessage): Observable<void> {
+  submitemailform(message: ContactMessage): Observable<EmailFormrRsponse> {
     console.log('Submitting contact message:', message);
-    return this.http.post<void>(environment.contactApiUrl, message);
+    return this.http.post<EmailFormrRsponse>(environment.contactApiUrlLocal, message);
   }
 }

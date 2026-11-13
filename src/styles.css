@@ -820,7 +820,7 @@ p {
   position: relative;
   display: grid;
   /* min-height: 200px; */
-  height: 295px;
+  height: 350px;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 0.8fr);
   align-items: center;
   gap: 80px;

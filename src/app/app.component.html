@@ -63,6 +63,7 @@
             <span>Render</span>
         </div>
          <div class="art-stack">
+            <span>Mongodb</span>
             <span>VS Code Github</span>
           </div>
       </div>
@@ -127,7 +128,8 @@
             [class.project-visual--three]="project.number === '03'">
             <span class="project-number">{{ project.number }}</span>
             @if (project.video) {
-              <video class="project-video" controls playsinline preload="metadata" [attr.aria-label]="project.title + ' project video'">
+              <!-- <video class="project-video" controls playsinline preload="none" [attr.aria-label]="project.title + ' project video'"> -->
+                <video class="project-video" controls playsinline preload="metadata" [attr.aria-label]="project.title + ' project video'">
                 <source [src]="project.video" type="video/mp4">
                 Your browser does not support embedded videos.
               </video>

@@ -112,8 +112,9 @@ export class AppComponent {
     }
 
     this.emailSubmissionStatus = 'submitting';
-    this.emailService.submit({ name, email: senderEmail, message }).subscribe({
-      next: () => {
+    this.emailService.submitemailform({ name, email: senderEmail, message }).subscribe({
+      next: (response) => {
+        console.log(response,response.detail,response.successflag);
         this.emailSubmissionStatus = 'success';
       },
       error: () => {
