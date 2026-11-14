@@ -336,3 +336,17 @@ Make sure your GitHub Pages workflow deploys the resulting dist output.
 
 Output location: D:\vinaya_portfolio_GIT\vinayaa.github.io\dist\vinayaa-portfolio
 changed dist\ to docs in angular.json "outputPath": "docs/vinayaa-portfolio",
+
+// "outputPath": "dist/vinayaa-portfolio",
+// "outputPath": "docs/vinayaa-portfolio",
+			
+The Pages source appears to be publishing the wrong directory level. The repository’s Angular build is configured to write into docs/vinayaa-portfolio, and the generated index.html is actually at docs/vinayaa-portfolio/browser/index.html. GitHub Pages needs index.html at the root of its selected publishing folder—for example, docs/index.html if Pages is set to publish from main → /docs.
+
+You can fix this by configuring Angular to put the browser build directly in docs. In angular.json, replace the current outputPath setting with:
+
+JSON
+"outputPath": {
+  "base": "docs",
+  "browser": ""
+}
+Then run npm run build, commit the updated docs output, and check that docs/index.html exists. In Settings → Pages, select the main branch and /docs as the publishing source. Alternatively, use a GitHub Actions Pages deployment configured to publish the nested browser output directory.
