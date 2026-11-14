@@ -335,3 +335,4 @@ npm run build -- --configuration production
 Make sure your GitHub Pages workflow deploys the resulting dist output.
 
 Output location: D:\vinaya_portfolio_GIT\vinayaa.github.io\dist\vinayaa-portfolio
+changed dist\ to docs in angular.json "outputPath": "docs/vinayaa-portfolio",
