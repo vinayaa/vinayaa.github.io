@@ -27,6 +27,7 @@ export class EmailService {
 
   submitemailform(message: ContactMessage): Observable<EmailFormrRsponse> {
     console.log('Submitting contact message:', message);
-    return this.http.post<EmailFormrRsponse>(environment.contactApiUrlLocal, message);
+    console.log('Contact API URL:', environment.contactApiUrl);
+    return this.http.post<EmailFormrRsponse>(environment.contactApiUrl, message);
   }
 }

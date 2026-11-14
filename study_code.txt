@@ -307,3 +307,31 @@ response from django docker audioplayer api -  contactApiUrlLocal:'http://127.0.
     "notification_sent": true,
     "detail": "Submission saved and notification email sent."
 }
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+14/11/2026
+to check angular version in vs code - npx ng version
+Angular CLI: 17.3.17
+Node: 18.17.0
+Package Manager: npm 9.6.7
+OS: win32 x64
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+environment.ts and environment.development.ts 
+Configured Angular’s development build to replace environment.ts with environment.development.ts. The service can use environment.contactApiUrl in both modes:
+
+ng serve uses the local API URL from the development environment.
+ng build --configuration production uses the server URL from environment.ts.
+Both development and production builds passed. The replacement is configured in angular.json.
+
+to run -
+Use npm start from the project folder. It runs ng serve, which defaults to the development configuration and uses environment.development.ts.
+
+You can also run npx ng serve; they’re equivalent here.
+
+user -will it automatically take production url when this project will be uploaded on github as github pages
+Not automatically just by uploading the project. GitHub Pages serves the built files, so your deployment workflow must build in production mode. That build uses environment.ts (the production URL); ng serve uses environment.development.ts.
+
+Run this before deploying:
+npm run build -- --configuration production
+Make sure your GitHub Pages workflow deploys the resulting dist output.
+
+Output location: D:\vinaya_portfolio_GIT\vinayaa.github.io\dist\vinayaa-portfolio
