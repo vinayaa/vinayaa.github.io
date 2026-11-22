@@ -126,6 +126,20 @@ describe('AppComponent', () => {
     expect(video.querySelector('source')?.getAttribute('src')).toBe('assets/projects_videos/sample1.mp4');
   });
 
+  it('renders project links only when the link is nonblank', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.componentInstance.projects[0].link = '   ';
+    fixture.detectChanges();
+
+    const links = fixture.nativeElement.querySelectorAll('.project-link') as NodeListOf<HTMLAnchorElement>;
+
+    expect(links.length).toBe(2);
+    expect(Array.from(links).map((link) => link.getAttribute('href'))).toEqual([
+      'https://vinayaa.github.io/',
+      'https://djangoaudioplayerweb.onrender.com/'
+    ]);
+  });
+
   it('closes the mobile menu when a navigation link is selected', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.componentInstance.menuOpen = true;

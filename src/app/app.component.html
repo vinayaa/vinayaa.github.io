@@ -56,15 +56,21 @@
         <div class="art-card-rule"></div>
         <div class="art-stack">
           <!-- <div class="row"> -->
-            <span>Django</span>
+            <span>Django REST</span>
             <span>Flask</span>
             <span>Angular</span>
             <span>Docker</span>
-            <span>Render</span>
+            
         </div>
          <div class="art-stack">
             <span>Mongodb</span>
-            <span>VS Code Github</span>
+            <span>Render</span>
+            <span>Redis,Celery</span>
+            <span>GitHub</span>        
+          </div>
+          <div class="art-stack">
+            <span>VS Code GitHub</span>
+            
           </div>
       </div>
       <span class="art-caption">DESIGN-MINDED DEVELOPMENT <span aria-hidden="true">✳</span></span>
@@ -164,7 +170,9 @@
                 <li>{{ tag }}</li>
               }
             </ul>
-            <a class="project-link" [href]="project.link" target="_blank" rel="noopener noreferrer">Live project link</a>
+            @if (project.link?.trim()) {
+              <a class="project-link" [href]="project.link" target="_blank" rel="noopener noreferrer">Live project link</a>
+            }
           </div>
         </article>
     </ng-template>
