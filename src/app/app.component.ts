@@ -58,13 +58,13 @@ export class AppComponent {
     },
     {
       number: '04',
-      title: 'The dashboard',
+      title: 'Simply made Audio Player with loop settings for each track',
       category: 'PRODUCT DESIGN',
-      description: 'A clear, data-rich workspace designed to make everyday decisions feel simple.',
-      development_tools: ['VS Code Copilot'],
-      video: 'assets/projects_videos/sample1.mp4',
-      tags: ['Angular', 'TypeScript', 'UI design'],
-      link:'https://djangoaudioplayerweb.onrender.com/',
+      description: 'Set Loop counter for each track and play them in a loop. This project is built using Angular, Docker,and deployed on Render.',
+      development_tools: ['AI-powered VS Code GitHub Copilot'],
+      video: 'assets/projects_videos/angularaudioplayer.mp4',
+      tags: ['Angular', 'Docker', 'Render',],
+      link:'https://angulardockeraudioplayerv1-0.onrender.com/',
     }
   ];
 

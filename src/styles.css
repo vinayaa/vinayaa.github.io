@@ -434,6 +434,7 @@ p {
   grid-template-columns: 1fr 1fr;
   gap: 100px;
   border-top: 1px solid var(--line);
+  background: var(--paper-deep);
 }
 
 .section-intro h2,
